@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
+import './Forms.css';
 
 const TicketForm = () => {
   const [subject, setSubject] = useState('');
@@ -12,70 +13,76 @@ const TicketForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const body = {
-      subject,
-      description,
-      tracker,
-      prioridad,
-      status
-    };
+    const body = { subject, description, tracker, prioridad, status };
 
     try {
-      const res = await axios.post('http://localhost:4000/crearticket', body);
-      console.log('Ticket creado:', res.data);
-      setMessage('✅ Ticket creado correctamente');
+      await axios.post('http://localhost:4000/crearticket', body);
+      setMessage('Ticket creado correctamente');
       setSubject('');
       setDescription('');
     } catch (err) {
-      console.error('Error:', err);
-      setMessage('❌ Error al crear ticket');
+      setMessage(' Error al crear ticket');
     }
   };
 
   return (
-    <div className="card">
+    <div className="ticket-container">
       <h2>Crear ticket</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Asunto</label>
-        <input
-          type="text"
-          value={subject}
-          onChange={(e) => setSubject(e.target.value)}
-          placeholder="Ej: Error en login"
-          required
-        />
 
-        <label>Descripción</label>
-        <textarea
-          rows="4"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Describe el problema..."
-        />
+      <form className="ticket-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Asunto</label>
+          <input
+            type="text"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            placeholder="Ej: Error en login"
+            required
+          />
+        </div>
 
-        <label>Tracker</label>
-        <select value={tracker} onChange={(e) => setTracker(e.target.value)}>
-          <option value="Bug">Bug</option>
-          <option value="Tarea">Tarea</option>
-        </select>
+        <div className="form-group">
+          <label>Descripción</label>
+          <textarea
+            rows="4"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Describe el problema..."
+          />
+        </div>
 
-        <label>Prioridad</label>
-        <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
-          <option value="Normal">Normal</option>
-          <option value="Alta">Alta</option>
-          <option value="Media">Media</option>
-        </select>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Tracker</label>
+            <select value={tracker} onChange={(e) => setTracker(e.target.value)}>
+              <option value="Bug">Bug</option>
+              <option value="Tarea">Tarea</option>
+            </select>
+          </div>
 
-        <label>Status</label>
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="Nueva">Nueva</option>
-          <option value="En Curso">En Curso</option>
-          <option value="Cerrada">Cerrada</option>
-        </select>
+          <div className="form-group">
+            <label>Prioridad</label>
+            <select value={prioridad} onChange={(e) => setPrioridad(e.target.value)}>
+              <option value="Normal">Normal</option>
+              <option value="Alta">Alta</option>
+              <option value="Media">Media</option>
+            </select>
+          </div>
 
-        <button type="submit">Enviar</button>
+          <div className="form-group">
+            <label>Status</label>
+            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+              <option value="Nueva">Nueva</option>
+              <option value="En Curso">En Curso</option>
+              <option value="Cerrada">Cerrada</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit">Crear ticket</button>
       </form>
-      <p>{message}</p>
+
+      {message && <p className="message">{message}</p>}
     </div>
   );
 };

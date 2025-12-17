@@ -3,7 +3,7 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors()); //para conectarse con los servidores de diferentes puertos
 
 app.use(express.urlencoded({ extended: true })); // para los formularios
 
