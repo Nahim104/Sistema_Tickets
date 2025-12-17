@@ -1,0 +1,17 @@
+@key = d132df6bbdfdde59ffd983f39569588fda398be6
+
+### Crear un issue
+POST http://localhost:3000/issues.json
+Content-Type: application/json
+X-Redmine-API-Key: {{key}}
+
+{
+  "issue": {
+    "project_id": "sistema-tickets",
+    "subject": "Tarea de Prueba de API",
+    "description": "Probar la creación de una tarea mediante la API de Redmine en VSCode",
+    "tracker_id": 6,
+    "status_id": 3,
+    "priority_id": 3
+  }
+}

@@ -1,0 +1,9 @@
+
+@key = d132df6bbdfdde59ffd983f39569588fda398be6
+
+### List all issues
+GET http://localhost:3000/issues.json
+Content-Type: application/json
+X-Redmine-API-Key: {{key}} 
+
+
